@@ -10,10 +10,15 @@ async function handleCreateShortUrl(req, res) {
   await URL.create({
     shortId: shortId,
     redirectUrl: body.url,
-    visitHistory: []
+    visitHistory: [],
+    userId: req.user.id,
   });
 
-  return res.json({ id: shortId });
+  const allUrls = await URL.find({ userId: req.user._id });  
+  return res.render("home", {
+    urls: allUrls,
+    id: shortId,  
+  });
 };
 
 

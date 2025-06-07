@@ -1,4 +1,6 @@
 const express = require('express');
+const { checkForAuthentication } = require('../middlewares/auth');
+
 const {
   handleCreateShortUrl,
   handleGetAnalytics
@@ -6,11 +8,9 @@ const {
 
 const router = express.Router();
 
-router.post("/", handleCreateShortUrl);
+router.post("/",checkForAuthentication, handleCreateShortUrl);
 
 router.get("/analytics/:shortId", handleGetAnalytics);
 
-module.exports = {
-  router
-};
+module.exports = router;
 
